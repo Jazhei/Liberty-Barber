@@ -5,6 +5,8 @@ import Dashboard from './pages/Dashboard';
 import Appointments from './pages/Appointments';
 import Products from './pages/Products';
 import Services from './pages/Services';
+import Finances from './pages/Finances';
+import GenerateSale from './pages/GenerateSale';
 
 // Componente simple para proteger la ruta del Dashboard y sus vistas
 const ProtectedRoute = ({ children }) => {
@@ -49,6 +51,22 @@ function App() {
           element={
             <ProtectedRoute>
               <Services />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/finances" 
+          element={
+            <ProtectedRoute>
+              <Finances />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/sales/new" 
+          element={
+            <ProtectedRoute>
+              <GenerateSale />
             </ProtectedRoute>
           } 
         />

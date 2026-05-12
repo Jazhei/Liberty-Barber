@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.core.database import engine, Base
-from app.api import auth
+from app.api import auth, appointments, catalog, sales
 
 # Esto asegura que las tablas se creen al iniciar, aunque ya lo hacemos en init_db.py
 Base.metadata.create_all(bind=engine)
@@ -18,6 +18,9 @@ app.add_middleware(
 )
 
 app.include_router(auth.router, prefix="/api")
+app.include_router(appointments.router, prefix="/api")
+app.include_router(catalog.router, prefix="/api")
+app.include_router(sales.router, prefix="/api")
 
 @app.get("/")
 def read_root():

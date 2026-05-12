@@ -12,6 +12,8 @@ const Dashboard = () => {
   };
 
   const menuOptions = [
+    { title: 'Generar Venta', icon: '💳', description: 'Registrar un nuevo pago', color: 'bg-yellow-50 text-yellow-600 border-yellow-100 hover:border-yellow-300', path: '/sales/new' },
+    { title: 'Finanzas', icon: '📊', description: 'Dashboard y estadísticas', color: 'bg-indigo-50 text-indigo-600 border-indigo-100 hover:border-indigo-300', path: '/finances' },
     { title: 'Gestión de Citas', icon: '📅', description: 'Visualiza y administra la agenda', color: 'bg-blue-50 text-blue-600 border-blue-100 hover:border-blue-300', path: '/appointments' },
     { title: 'Stock de Productos', icon: '📦', description: 'Control de inventario y ventas', color: 'bg-emerald-50 text-emerald-600 border-emerald-100 hover:border-emerald-300', path: '/products' },
     { title: 'Servicios', icon: '✂️', description: 'Cortes, coloración, perfilado', color: 'bg-purple-50 text-purple-600 border-purple-100 hover:border-purple-300', path: '/services' },

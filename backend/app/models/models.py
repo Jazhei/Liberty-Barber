@@ -24,7 +24,6 @@ class User(Base):
     role = Column(Enum(RoleEnum), default=RoleEnum.client)
 
     # Relaciones
-    appointments_as_client = relationship("Appointment", foreign_keys="Appointment.client_id", back_populates="client")
     appointments_as_barber = relationship("Appointment", foreign_keys="Appointment.barber_id", back_populates="barber")
 
 class Product(Base):
@@ -45,6 +44,17 @@ class Service(Base):
     price = Column(Float, nullable=False)
     duration_minutes = Column(Integer, default=30, nullable=False)
 
+class Sale(Base):
+    __tablename__ = "sales"
+
+    id = Column(Integer, primary_key=True, index=True)
+    amount = Column(Float, nullable=False)
+    description = Column(String, nullable=True)
+    date = Column(DateTime, nullable=False)
+    barber_id = Column(Integer, ForeignKey("users.id"), nullable=True)
+    
+    barber = relationship("User", foreign_keys=[barber_id])
+
 class Appointment(Base):
     __tablename__ = "appointments"
 
@@ -54,11 +64,8 @@ class Appointment(Base):
     status = Column(Enum(AppointmentStatusEnum), default=AppointmentStatusEnum.pending)
     notes = Column(String, nullable=True)
 
-    client_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    client_name = Column(String, nullable=False)
     barber_id = Column(Integer, ForeignKey("users.id"), nullable=False)
-    service_id = Column(Integer, ForeignKey("services.id"), nullable=True)
 
     # Relaciones
-    client = relationship("User", foreign_keys=[client_id], back_populates="appointments_as_client")
     barber = relationship("User", foreign_keys=[barber_id], back_populates="appointments_as_barber")
-    service = relationship("Service")

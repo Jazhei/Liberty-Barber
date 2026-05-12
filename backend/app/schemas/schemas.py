@@ -1,7 +1,23 @@
 from pydantic import BaseModel, EmailStr
 from typing import Optional, List
-from datetime import date, time
+from datetime import date, time, datetime
 from app.models.models import RoleEnum, AppointmentStatusEnum
+
+# --- Sale Schemas ---
+class SaleBase(BaseModel):
+    amount: float
+    description: Optional[str] = None
+    date: datetime
+    barber_id: Optional[int] = None
+
+class SaleCreate(SaleBase):
+    pass
+
+class SaleResponse(SaleBase):
+    id: int
+
+    class Config:
+        orm_mode = True
 
 # --- User Schemas ---
 class UserBase(BaseModel):
@@ -56,9 +72,8 @@ class AppointmentBase(BaseModel):
     time: time
     status: Optional[AppointmentStatusEnum] = AppointmentStatusEnum.pending
     notes: Optional[str] = None
-    client_id: int
+    client_name: str
     barber_id: int
-    service_id: Optional[int] = None
 
 class AppointmentCreate(AppointmentBase):
     pass

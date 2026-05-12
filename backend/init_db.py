@@ -1,12 +1,10 @@
 from sqlalchemy.orm import Session
 from app.core.database import engine, Base, SessionLocal
 from app.models.models import User, RoleEnum
-from passlib.context import CryptContext
-
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+import bcrypt
 
 def get_password_hash(password):
-    return pwd_context.hash(password)
+    return bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
 
 def init_db():
     print("Creando tablas en la base de datos...")

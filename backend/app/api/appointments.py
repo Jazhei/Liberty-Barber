@@ -38,10 +38,28 @@ def get_appointments(db: Session = Depends(get_db)):
             "barber_name": barber.full_name if barber else "Desconocido"
         }
         result.append(app_dict)
-    return result
+    return result    
+
 
 # Endpoint extra para obtener todos los usuarios (para llenar los selects en el frontend)
 @router.get("/users/barbers")
 def get_barbers(db: Session = Depends(get_db)):
     barbers = db.query(User).filter(User.role == RoleEnum.barber).all()
     return [{"id": b.id, "full_name": b.full_name} for b in barbers]
+
+#funcion para eliminar una cita
+@router.delete("/appointments/{appointment_id}", status_code=status.HTTP_204_NO_CONTENT)
+def delete_appointment(appointment_id: int, db: Session = Depends(get_db)):
+    import os
+    print(f"DB URL: {db.bind.url}")  # <-- muestra qué base de datos está usando
+    print(f"Buscando id: {appointment_id}")
+    appointment = db.query(Appointment).filter(Appointment.id == appointment_id).first()
+    print(f"Resultado: {appointment}")
+    if not appointment:
+        raise HTTPException(status_code=404, detail="Cita no encontrada")
+    db.delete(appointment)
+    db.commit()
+
+@router.delete("/test-delete")
+def test_delete():
+    return {"message": "delete funciona"}

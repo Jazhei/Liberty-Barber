@@ -17,7 +17,7 @@ class SaleResponse(SaleBase):
     id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 # --- User Schemas ---
 class UserBase(BaseModel):
@@ -32,7 +32,7 @@ class UserResponse(UserBase):
     id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 # --- Product Schemas ---
 class ProductBase(BaseModel):
@@ -40,16 +40,15 @@ class ProductBase(BaseModel):
     description: Optional[str] = None
     price: float
     stock: int
+    is_insumo: bool = False
 
 class ProductCreate(ProductBase):
     pass
 
 class ProductResponse(ProductBase):
     id: int
-
     class Config:
-        orm_mode = True
-
+        from_attributes = True
 # --- Service Schemas ---
 class ServiceBase(BaseModel):
     name: str
@@ -64,7 +63,7 @@ class ServiceResponse(ServiceBase):
     id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 # --- Appointment Schemas ---
 class AppointmentBase(BaseModel):
@@ -82,4 +81,4 @@ class AppointmentResponse(AppointmentBase):
     id: int
     
     class Config:
-        orm_mode = True
+        from_attributes = True

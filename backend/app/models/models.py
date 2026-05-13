@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Float, DateTime, ForeignKey, Enum, Date, Time
+from sqlalchemy import Column, Integer, String, Float, DateTime, ForeignKey, Enum, Date, Time, Boolean
 from sqlalchemy.orm import relationship
 import enum
 from app.core.database import Base
@@ -34,6 +34,7 @@ class Product(Base):
     description = Column(String, nullable=True)
     price = Column(Float, nullable=False)
     stock = Column(Integer, default=0, nullable=False)
+    is_insumo = Column(Boolean, default=False)
 
 class Service(Base):
     __tablename__ = "services"

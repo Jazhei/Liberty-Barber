@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from app.core.database import get_db
 from app.models.models import Service, Product
@@ -25,8 +25,21 @@ def get_products(db: Session = Depends(get_db)):
 
 @router.post("/products", response_model=ProductResponse)
 def create_product(product: ProductCreate, db: Session = Depends(get_db)):
-    db_product = Product(**product.dict())
+    db_product = Product(
+        name=product.name,
+        description=product.description,
+        price=product.price,
+        stock=product.stock,
+        is_insumo=product.is_insumo
+    )
     db.add(db_product)
     db.commit()
     db.refresh(db_product)
     return db_product
+@router.delete("/products/{product_id}", status_code=status.HTTP_204_NO_CONTENT)
+def delete_product(product_id: int, db: Session = Depends(get_db)):
+    product = db.query(Product).filter(Product.id == product_id).first()
+    if not product:
+        raise HTTPException(status_code=404, detail="Producto no encontrado")
+    db.delete(product)
+    db.commit()

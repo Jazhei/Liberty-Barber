@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Scissors, Loader2 } from "lucide-react";
 import Button from "../components/atoms/Button";
 import Input from "../components/atoms/Input";
 
@@ -14,21 +15,16 @@ const Login = () => {
     e.preventDefault();
     setError("");
     setIsLoading(true);
-
     try {
       const response = await fetch(
         "https://liberty-barber.onrender.com/api/login",
         {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email, password }),
         },
       );
-
       const data = await response.json();
-
       if (response.ok) {
         localStorage.setItem("user", JSON.stringify(data.user));
         navigate("/dashboard");
@@ -47,7 +43,7 @@ const Login = () => {
       <div className="bg-white/95 backdrop-blur-sm p-10 rounded-2xl shadow-xl border border-gray-100 w-full max-w-md transform transition-all hover:scale-[1.01] animate-fade-in-up">
         <div className="text-center mb-8">
           <div className="w-16 h-16 bg-blue-600 rounded-full mx-auto mb-4 flex items-center justify-center shadow-lg">
-            <span className="text-3xl text-white">✂️</span>
+            <Scissors className="w-8 h-8 text-white" strokeWidth={1.5} />
           </div>
           <h1 className="text-3xl font-extrabold text-gray-900 tracking-tight">
             Liberty Barber
@@ -82,13 +78,12 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
             className="transition-colors duration-200"
           />
-
           <Button
             type="submit"
             variant="primary"
-            className="w-full mt-6 py-3 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 flex justify-center items-center"
+            className="w-full mt-6 py-3 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 flex justify-center items-center gap-2"
           >
-            {isLoading ? <span className="animate-spin mr-2">⏳</span> : null}
+            {isLoading && <Loader2 className="w-4 h-4 animate-spin" />}
             {isLoading ? "Iniciando..." : "Iniciar Sesión"}
           </Button>
         </form>

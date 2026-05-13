@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { ArrowLeft, Plus, Scissors, X, Loader2 } from "lucide-react";
 import Button from "../components/atoms/Button";
 
 const Services = () => {
@@ -8,7 +9,6 @@ const Services = () => {
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  // Form State
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
@@ -70,7 +70,7 @@ const Services = () => {
                 onClick={() => navigate("/dashboard")}
                 className="p-2 rounded-full hover:bg-gray-100 transition-colors text-gray-500"
               >
-                ←
+                <ArrowLeft className="w-5 h-5" />
               </button>
               <h1 className="text-xl font-bold text-gray-900">
                 Catálogo de Servicios
@@ -79,23 +79,23 @@ const Services = () => {
             <Button
               variant="primary"
               onClick={() => setShowModal(true)}
-              className="bg-purple-600 hover:bg-purple-700 shadow-sm rounded-full px-5 text-sm"
+              className="flex items-center gap-1.5 bg-purple-600 hover:bg-purple-700 shadow-sm rounded-full px-5 text-sm"
             >
-              + Nuevo Servicio
+              <Plus className="w-4 h-4" />
+              Nuevo Servicio
             </Button>
           </div>
         </div>
       </nav>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 animate-fade-in-up">
-        {/* Grilla de Servicios */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {/* Tarjeta de Agregar Nuevo */}
           <div
             onClick={() => setShowModal(true)}
             className="border-2 border-dashed border-gray-300 rounded-2xl flex flex-col items-center justify-center text-gray-400 py-12 hover:border-purple-400 hover:bg-purple-50 transition-colors cursor-pointer min-h-[200px]"
           >
-            <span className="text-3xl mb-2 text-purple-400">+</span>
+            <Plus className="w-8 h-8 mb-2 text-purple-400" strokeWidth={1.5} />
             <span className="font-medium text-purple-600">Crear Servicio</span>
           </div>
 
@@ -105,8 +105,11 @@ const Services = () => {
               className="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm hover:shadow-md transition-shadow flex flex-col"
             >
               <div className="flex justify-between items-start mb-4">
-                <div className="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 text-xl">
-                  ✂️
+                <div className="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center">
+                  <Scissors
+                    className="w-5 h-5 text-purple-600"
+                    strokeWidth={1.5}
+                  />
                 </div>
               </div>
               <h3 className="font-bold text-gray-900 text-lg">{svc.name}</h3>
@@ -136,9 +139,9 @@ const Services = () => {
               </h2>
               <button
                 onClick={() => setShowModal(false)}
-                className="text-gray-400 hover:text-gray-600"
+                className="text-gray-400 hover:text-gray-600 transition-colors"
               >
-                ✖
+                <X className="w-5 h-5" />
               </button>
             </div>
 
@@ -206,8 +209,9 @@ const Services = () => {
                 <Button
                   type="submit"
                   variant="primary"
-                  className="w-full bg-purple-600 hover:bg-purple-700"
+                  className="w-full flex items-center justify-center gap-2 bg-purple-600 hover:bg-purple-700"
                 >
+                  {loading && <Loader2 className="w-4 h-4 animate-spin" />}
                   {loading ? "Guardando..." : "Guardar"}
                 </Button>
               </div>

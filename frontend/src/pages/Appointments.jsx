@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { ArrowLeft, Plus, Inbox, X, Loader2 } from "lucide-react";
 import Button from "../components/atoms/Button";
 
 const Appointments = () => {
@@ -9,7 +10,6 @@ const Appointments = () => {
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  // Form state
   const [date, setDate] = useState(new Date().toISOString().split("T")[0]);
   const [time, setTime] = useState("");
   const [clientName, setClientName] = useState("");
@@ -80,9 +80,7 @@ const Appointments = () => {
     try {
       const res = await fetch(
         `https://liberty-barber.onrender.com/api/appointments/${id}`,
-        {
-          method: "DELETE",
-        },
+        { method: "DELETE" },
       );
       if (res.ok || res.status === 204) {
         setAppointments((prev) => prev.filter((app) => app.id !== id));
@@ -96,7 +94,6 @@ const Appointments = () => {
 
   return (
     <div className="min-h-screen bg-transparent">
-      {/* Navbar Simple */}
       <nav className="bg-white border-b border-gray-200 sticky top-0 z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16 items-center">
@@ -105,7 +102,7 @@ const Appointments = () => {
                 onClick={() => navigate("/dashboard")}
                 className="p-2 rounded-full hover:bg-gray-100 transition-colors text-gray-500"
               >
-                ←
+                <ArrowLeft className="w-5 h-5" />
               </button>
               <h1 className="text-xl font-bold text-gray-900">
                 Agenda de Citas
@@ -114,16 +111,16 @@ const Appointments = () => {
             <Button
               variant="primary"
               onClick={() => setShowModal(true)}
-              className="shadow-sm rounded-full px-5 text-sm"
+              className="flex items-center gap-1.5 shadow-sm rounded-full px-5 text-sm"
             >
-              + Nueva Cita
+              <Plus className="w-4 h-4" />
+              Nueva Cita
             </Button>
           </div>
         </div>
       </nav>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 animate-fade-in-up">
-        {/* Contenedor de Tabla */}
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full text-left whitespace-nowrap">
@@ -141,7 +138,10 @@ const Appointments = () => {
                   <tr>
                     <td colSpan="5" className="p-12 text-center">
                       <div className="flex flex-col items-center justify-center text-gray-400">
-                        <span className="text-4xl mb-3">📭</span>
+                        <Inbox
+                          className="w-12 h-12 mb-3 text-gray-300"
+                          strokeWidth={1.5}
+                        />
                         <p className="text-lg font-medium text-gray-900 mb-1">
                           Sin citas programadas
                         </p>
@@ -155,16 +155,16 @@ const Appointments = () => {
                       <td className="p-4">{app.time.slice(0, 5)}</td>
                       <td className="p-4 font-medium">{app.client_name}</td>
                       <td className="p-4">{app.barber_name}</td>
-                      <td className="p-4">
+                      <td className="p-4 flex items-center gap-3">
                         <span className="px-4 py-1 bg-yellow-100 text-yellow-800 rounded-md text-xs">
                           {app.status === "pending" ? "Pendiente" : app.status}
                         </span>
                         <button
                           onClick={() => handleDelete(app.id)}
-                          className="text-red-400 hover:text-red-600 transition-colors text-xs font-bold"
+                          className="text-red-400 hover:text-red-600 transition-colors"
                           title="Eliminar cita"
                         >
-                          ✕
+                          <X className="w-4 h-4" />
                         </button>
                       </td>
                     </tr>
@@ -184,9 +184,9 @@ const Appointments = () => {
               <h2 className="text-xl font-bold text-gray-900">Agendar Cita</h2>
               <button
                 onClick={() => setShowModal(false)}
-                className="text-gray-400 hover:text-gray-600"
+                className="text-gray-400 hover:text-gray-600 transition-colors"
               >
-                ✖
+                <X className="w-5 h-5" />
               </button>
             </div>
 
@@ -256,7 +256,12 @@ const Appointments = () => {
                 >
                   Cancelar
                 </Button>
-                <Button type="submit" variant="primary" className="w-full">
+                <Button
+                  type="submit"
+                  variant="primary"
+                  className="w-full flex items-center justify-center gap-2"
+                >
+                  {loading && <Loader2 className="w-4 h-4 animate-spin" />}
                   {loading ? "Guardando..." : "Agendar"}
                 </Button>
               </div>

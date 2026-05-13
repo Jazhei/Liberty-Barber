@@ -16,7 +16,7 @@ const Products = () => {
   const [isInsumo, setIsInsumo] = useState("false");
 
   const fetchProducts = () => {
-    fetch("http://localhost:8000/api/products")
+    fetch("https://liberty-barber.onrender.com/api/products")
       .then((res) => res.json())
       .then((data) => setProducts(data))
       .catch((e) => console.error(e));
@@ -37,11 +37,14 @@ const Products = () => {
         stock: parseInt(stock),
         is_insumo: isInsumo === "true",
       };
-      const res = await fetch("http://localhost:8000/api/products", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
+      const res = await fetch(
+        "https://liberty-barber.onrender.com/api/products",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        },
+      );
       if (res.ok) {
         setShowModal(false);
         fetchProducts();
@@ -61,9 +64,12 @@ const Products = () => {
   const handleDelete = async (id) => {
     if (!confirm("¿Eliminar este producto?")) return;
     try {
-      const res = await fetch(`http://localhost:8000/api/products/${id}`, {
-        method: "DELETE",
-      });
+      const res = await fetch(
+        `https://liberty-barber.onrender.com/api/products/${id}`,
+        {
+          method: "DELETE",
+        },
+      );
       if (res.ok || res.status === 204) {
         setProducts((prev) => prev.filter((p) => p.id !== id));
       } else {

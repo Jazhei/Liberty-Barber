@@ -22,7 +22,9 @@ const Appointments = () => {
 
   const fetchAppointments = async () => {
     try {
-      const res = await fetch("http://localhost:8000/api/appointments");
+      const res = await fetch(
+        "https://liberty-barber.onrender.com/api/appointments",
+      );
       if (res.ok) setAppointments(await res.json());
     } catch (e) {
       console.error("Error fetching appointments");
@@ -31,7 +33,9 @@ const Appointments = () => {
 
   const fetchUsers = async () => {
     try {
-      const bRes = await fetch("http://localhost:8000/api/users/barbers");
+      const bRes = await fetch(
+        "https://liberty-barber.onrender.com/api/users/barbers",
+      );
       if (bRes.ok) setBarbers(await bRes.json());
     } catch (e) {
       console.error("Error fetching users");
@@ -49,11 +53,14 @@ const Appointments = () => {
         barber_id: parseInt(barberId),
       };
 
-      const res = await fetch("http://localhost:8000/api/appointments", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
+      const res = await fetch(
+        "https://liberty-barber.onrender.com/api/appointments",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        },
+      );
 
       if (res.ok) {
         setShowModal(false);
@@ -71,9 +78,12 @@ const Appointments = () => {
   const handleDelete = async (id) => {
     if (!confirm("¿Eliminar esta cita?")) return;
     try {
-      const res = await fetch(`http://localhost:8000/api/appointments/${id}`, {
-        method: "DELETE",
-      });
+      const res = await fetch(
+        `https://liberty-barber.onrender.com/api/appointments/${id}`,
+        {
+          method: "DELETE",
+        },
+      );
       if (res.ok || res.status === 204) {
         setAppointments((prev) => prev.filter((app) => app.id !== id));
       } else {

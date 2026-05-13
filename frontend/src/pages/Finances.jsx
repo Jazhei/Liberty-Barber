@@ -24,12 +24,12 @@ const Finances = () => {
   const COLORS = ["#8b5cf6", "#3b82f6", "#ec4899", "#10b981", "#f59e0b"];
 
   useEffect(() => {
-    fetch("http://localhost:8000/api/users/barbers")
+    fetch("https://liberty-barber.onrender.com/api/users/barbers")
       .then((res) => res.json())
       .then((data) => setBarbers(data))
       .catch((e) => console.error(e));
 
-    fetch("http://localhost:8000/api/sales")
+    fetch("https://liberty-barber.onrender.com/api/sales")
       .then((res) => res.json())
       .then((data) => setSales(data))
       .catch((e) => console.error(e));
@@ -210,8 +210,7 @@ const Finances = () => {
             </div>
             <button
               onClick={handleDownloadExcel}
-              className="bg-green-600 hover:bg-green-700 text-white px-4 py-1.5 rounded-lg text-sm font-medium transition-colors shadow-sm flex items-center gap-2 
-fixed bottom-6 left-1/2 -translate-x-1/2 z-50"
+              className="bg-green-600 hover:bg-green-700 text-white px-4 py-1.5 rounded-lg text-sm font-medium transition-colors shadow-sm flex items-center gap-2 fixed bottom-6 left-1/2 -translate-x-1/2 z-50"
             >
               <span>📊</span> Descargar Excel
             </button>

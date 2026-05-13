@@ -15,7 +15,7 @@ const Services = () => {
   const [duration, setDuration] = useState("");
 
   const fetchServices = () => {
-    fetch("http://localhost:8000/api/services")
+    fetch("https://liberty-barber.onrender.com/api/services")
       .then((res) => res.json())
       .then((data) => setServices(data))
       .catch((e) => console.error(e));
@@ -35,11 +35,14 @@ const Services = () => {
         price: parseFloat(price),
         duration_minutes: parseInt(duration),
       };
-      const res = await fetch("http://localhost:8000/api/services", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
+      const res = await fetch(
+        "https://liberty-barber.onrender.com/api/services",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        },
+      );
       if (res.ok) {
         setShowModal(false);
         fetchServices();
